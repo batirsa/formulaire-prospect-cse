@@ -144,11 +144,11 @@ a{color:inherit}
   </div>
 
   <div class="types-row">
-    <div class="type-chip"><div class="t">F2</div><div class="p">2 pièces · 83 m²</div><div class="prix">dès 32M F</div></div>
-    <div class="type-chip"><div class="t">F3</div><div class="p">3 pièces · 137 m²</div><div class="prix">dès 52M F</div></div>
-    <div class="type-chip"><div class="t">F4</div><div class="p">4 pièces · 199 m²</div><div class="prix">dès 75M F</div></div>
+    <div class="type-chip" id="f2"><div class="t">F2</div><div class="p">2 pièces · 83 m²</div><div class="prix">dès 32M F</div></div>
+    <div class="type-chip" id="f3"><div class="t">F3</div><div class="p">3 pièces · 137 m²</div><div class="prix">dès 52M F</div></div>
+    <div class="type-chip" id="f4"><div class="t">F4</div><div class="p">4 pièces · 199 m²</div><div class="prix">dès 75M F</div></div>
   </div>
-  <div class="gallery-note">🖼️ Penthouses 4 et 5 pièces également disponibles — demandez le détail auprès de notre équipe.</div>
+  <div class="gallery-note" id="penthouse">🖼️ Penthouses 4 et 5 pièces également disponibles — demandez le détail auprès de notre équipe.</div>
 </div>
 
 <div class="gallery-section">
@@ -422,6 +422,26 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
     btn.disabled = false; btn.textContent = 'Envoyer ma demande';
   }
 });
+</script>
+<script>
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const typo = params.get('typologie'); // ex: F2, F3, F4, Penthouse
+  if (!typo) return;
+
+  const key = typo.toLowerCase();
+  const target = document.getElementById(key);
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  const cb = document.getElementById('type_' + key);
+  if (cb) cb.checked = true;
+
+  const budgetMap = { f2: 'bud_32', f3: 'bud_52', f4: 'bud_75' };
+  if (budgetMap[key]) {
+    const radio = document.getElementById(budgetMap[key]);
+    if (radio) radio.checked = true;
+  }
+})();
 </script>
 </body>
 </html>
